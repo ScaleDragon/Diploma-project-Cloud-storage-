@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="admin" id="create-test-sequence">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="HIBERNATE_SEQUENCE" />
+            </not>
+        </preConditions>
+        <comment>Создание сиквенса для H2-тестов.</comment>
+        <createSequence incrementBy="1"
+                        minValue="1"
+                        schemaName="public"
+                        sequenceName="HIBERNATE_SEQUENCE"
+                        startValue="1" />
+    </changeSet>
+
+</databaseChangeLog>
