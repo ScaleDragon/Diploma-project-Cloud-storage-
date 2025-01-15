@@ -1,24 +1,19 @@
 package main.service;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import main.dto.response.FileResponse;
 import main.entity.File;
 import main.repository.FileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -100,15 +95,11 @@ public class FileService {
     /**
      * Получение списка файлов у пользователя.
      * @param userId идентификатор пользователя
-     * @param limit максимальное кол-во файлов, которые нужно вернуть
+     * @param limit максимальное количество загружаемых записей
      * @return список файлов данного пользователя
      */
     @Transactional
-    public List<FileResponse> getFileList(Long userId, int limit) {
-        return fileRepository.findAllByUserId(userId)
-                .stream()
-                .limit(limit)
-                .map(file -> new FileResponse(file.getName(), file.getContent().length))
-                .collect(Collectors.toList());
+    public Collection<File> getFileList(Long userId, int limit) {
+        return fileRepository.findAllByUserId(userId, PageRequest.of(0, limit));
     }
 }

@@ -1,6 +1,5 @@
 package main.controller;
 
-import lombok.RequiredArgsConstructor;
 import main.dto.request.EditFileNameRequest;
 import main.dto.response.FileResponse;
 import main.service.FileService;
@@ -12,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * REST-контроллер для управления файлами.
@@ -39,7 +39,7 @@ public class FileController {
     public void deleteFile(
             @RequestHeader("auth-token") String authToken,
             @RequestParam(name = "filename") String name
-    ) throws IOException {
+    ) {
         authToken = authToken.split(" ")[1];
         Long userId = sessionService.checkAuthToken(authToken);
         fileService.deleteFile(userId, name);
@@ -73,6 +73,8 @@ public class FileController {
     ) {
         authToken = authToken.split(" ")[1];
         Long userId = sessionService.checkAuthToken(authToken);
-        return fileService.getFileList(userId, limit);
+        return fileService.getFileList(userId, limit).stream()
+                .map(file -> new FileResponse(file.getName(), file.getContent().length))
+                .collect(Collectors.toList());
     }
 }

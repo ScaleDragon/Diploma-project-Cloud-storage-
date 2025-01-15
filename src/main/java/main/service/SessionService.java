@@ -1,8 +1,6 @@
 package main.service;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import main.entity.File;
 import main.entity.Session;
 import main.repository.SessionRepository;
 import org.slf4j.Logger;

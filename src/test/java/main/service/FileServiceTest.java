@@ -8,17 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @DataJpaTest
@@ -60,7 +59,7 @@ public class FileServiceTest {
 
     @Test
     @DisplayName("Удаление файла из БД")
-    public void deleteFile() throws IOException {
+    public void deleteFile() {
         File file = new File(
                 null,
                 "file.txt",
@@ -84,7 +83,7 @@ public class FileServiceTest {
 
     @Test
     @DisplayName("Переименование файла")
-    public void editFile() throws IOException {
+    public void editFile() {
         File file = new File(
                 null,
                 "file.txt",
@@ -101,7 +100,7 @@ public class FileServiceTest {
 
     @Test
     @DisplayName("Получение содержимого файла")
-    public void getFile() throws IOException {
+    public void getFile() {
         File file = new File(
                 null,
                 "file.txt",
@@ -118,7 +117,7 @@ public class FileServiceTest {
 
     @Test
     @DisplayName("Получение списка файлов")
-    public void getFileList() throws IOException {
+    public void getFileList() {
         File file = new File(
                 null,
                 "file.txt",
@@ -127,10 +126,10 @@ public class FileServiceTest {
         );
         fileRepository.save(file);
 
-        List<FileResponse> files = fileService.getFileList(1L, 1);
+        Collection<File> files = fileService.getFileList(1L, 1);
         Assertions.assertEquals(1, files.size());
-        FileResponse fileResponse = files.get(0);
-        Assertions.assertEquals(4, fileResponse.getSize());
-        Assertions.assertEquals("file.txt", fileResponse.getFilename());
+        File f = files.iterator().next();
+        Assertions.assertEquals(4, f.getContent().length);
+        Assertions.assertEquals("file.txt", file.getName());
     }
 }

@@ -1,17 +1,14 @@
 package main.controller;
 
-import lombok.RequiredArgsConstructor;
 import main.dto.request.LoginRequest;
 import main.dto.response.LoginResponse;
 import main.exception.AuthorizationException;
 import main.service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 @RestController
 @RequestMapping

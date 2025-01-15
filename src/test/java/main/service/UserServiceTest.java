@@ -1,12 +1,9 @@
 package main.service;
 
 import main.dto.request.LoginRequest;
-import main.dto.response.FileResponse;
-import main.entity.File;
 import main.entity.Session;
 import main.entity.User;
 import main.exception.AuthorizationException;
-import main.repository.FileRepository;
 import main.repository.SessionRepository;
 import main.repository.UserRepository;
 import main.utils.HashUtils;
@@ -17,12 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
@@ -35,9 +29,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
     @Autowired
     private SessionRepository sessionRepository;
-
     private SessionService sessionService;
-
     private UserService userService;
 
     @BeforeEach

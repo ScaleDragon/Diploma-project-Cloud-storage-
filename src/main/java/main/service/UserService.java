@@ -10,14 +10,11 @@ import main.utils.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,7 +28,6 @@ public class UserService {
 
     /**
      * Совершает вход пользователя в систему.
-     *
      * @param loginRequest запрос входа пользователя
      * @return объект с токеном авторизации
      * @throws NoSuchAlgorithmException при внутренней ошибке хеширования пароля
@@ -62,7 +58,6 @@ public class UserService {
 
     /**
      * Совершает выход пользователя из системы.
-     *
      * @param authToken токен авторизации
      * @throws IllegalArgumentException если токен авторизации не привязан к пользователю
      */
@@ -73,14 +68,13 @@ public class UserService {
 
     /**
      * Регистрирует нового пользователя.
-     *
-     * @param login    логин
+     * @param login логин
      * @param password пароль
      * @throws NoSuchAlgorithmException при внутренней ошибке хеширования пароля
      */
     public void addUser(String login, String password) throws NoSuchAlgorithmException {
         if (userRepository.findByLogin(login).isPresent()) {
-            logger.error("Ошибка: пользователь с логином" + login + " уже существует!");
+            logger.error("Ошибка: пользователь с логином " + login + " уже существует!");
             throw new IllegalArgumentException("Пользователь с логином " + login + " уже существует!");
         }
         User user = User.builder()
